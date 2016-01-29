@@ -96,7 +96,7 @@ function create() {
     for (var i = 0; i < 10; i++)
     {
     	//  Create a star inside of the 'stars' group
-    	var star = stars.create(i * 120, 0, 'star');
+    	var star = stars.create(i * 85, 0, 'star');
     	//  Let gravity do its thing
     	star.body.gravity.y = 600;
     	//  This just gives each star a slightly random bounce value
@@ -112,14 +112,14 @@ function create() {
 	//  We will enable physics for any star that is created in this group
     spikes.enableBody = true;
     //  Here we'll create 12 of them evenly spaced apart
-    for (var i = 0; i < 3; i++)
+    for (var i = 0; i < 5; i++)
     {
     	//  Create a star inside of the 'stars' group
     	var spike = spikes.create(i * 200, 0, 'spike');
     	//  Let gravity do its thing
     	spike.body.gravity.y = 600;
     	//  This just gives each star a slightly random bounce value
-    	// spike.body.bounce.y = 0.3 + Math.random() * 0.2;
+    	spike.body.bounce.y = 1.0;
     }
 
     /* =============================================================================
@@ -144,6 +144,7 @@ function update() {
     //  Collide the player and the stars with the platforms
     game.physics.arcade.collide(player, platforms);
     game.physics.arcade.collide(stars, platforms);
+
     game.physics.arcade.collide(spikes, platforms);
     //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
     game.physics.arcade.overlap(player, stars, collectStar, null, this);
@@ -180,7 +181,7 @@ function update() {
     if (cursors.up.isDown && player.body.touching.down) 
     {
     	player.body.velocity.y = -340;
-    	jumpSound.volume = 0.2;
+    	jumpSound.volume = 1;
     	jumpSound.play();
     }
 
@@ -197,6 +198,7 @@ function collectStar (player, star) {
 	scoreText.text = 'Score: ' + score;
 
 	// sound
+	starsound.volume = 2;
 	starsound.play();
 }
 /* =============================================================================
@@ -208,6 +210,6 @@ function playerKill (player, spike) {
 	player.kill();
 
 	// SOUND - player killed
-	dieSound.volume = 0.2;
+	dieSound.volume = 1;
 	dieSound.play();
 }
